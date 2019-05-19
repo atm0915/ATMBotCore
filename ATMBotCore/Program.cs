@@ -6,8 +6,6 @@ namespace ATMBotCore
     {
         private static void Main()
         {
-            Unity.RegisterTypes();
-
             Console.WriteLine("Hello World!");
         }
     }
