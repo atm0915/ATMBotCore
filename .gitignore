@@ -445,3 +445,4 @@ fabric.properties
 .idea/
 ATMBotCore/bin/
 ATMBotCore/obj/
+/ATMBotCore/Config/
