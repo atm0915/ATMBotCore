@@ -1,7 +1,5 @@
 version: 1.0.{build}
-image:
-- Visual Studio 2017 Preview
-- Ubuntu
+image: Ubuntu
 skip_tags: true
 dotnet_csproj:
   patch: true
@@ -18,8 +16,7 @@ install:
 build_script:
   - dotnet build -c Release
 test_script:
-- ps: >-
+- sh:
     dotnet tool install coveralls.net --version 1.0.0-beta0003 --tool-path "${pwd}/tools"
-    dotnet test ATMBotCore.xUnit.Tests\ATMBotCore.xUnit.Tests.csproj"" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../../
-- cmd: .\tools\csmacnz.Coveralls.exe --opencover -i coverage.xml --useRelativePaths
-- sh: ./tools/csmacnz.Coveralls --opencover -i coverage.xml --useRelativePaths
+    dotnet test ATMBotCore.xUnit.Tests\ATMBotCore.xUnit.Tests.csproj"" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../
+    ./tools/csmacnz.Coveralls --opencover -i coverage.opencover.xml --useRelativePaths
