@@ -17,5 +17,5 @@ build_script:
   - dotnet build -c Release
 test_script:
   - sh: dotnet tool install coveralls.net --version 1.0.0-beta0003 --tool-path "./tools"
-  - sh: dotnet test ATMBotCore.xUnit.Tests/ATMBotCore.xUnit.Tests.csproj"" /p:CollectCoverage=true /p:Exclude="[ATMBotCore.*.Tests?]*" /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../../
+  - sh: dotnet test ATMBotCore.xUnit.Tests/ATMBotCore.xUnit.Tests.csproj"" /p:CollectCoverage=true /p:Exclude="[ATMBotCore.*.Tests?]*,[xunit*]*" /p:CoverletOutputFormat=opencover /p:CoverletOutputDirectory=../../
   - sh: ./tools/csmacnz.Coveralls --opencover -i ATMBotCore.xUnit.Tests/coverage.opencover.xml --useRelativePaths
