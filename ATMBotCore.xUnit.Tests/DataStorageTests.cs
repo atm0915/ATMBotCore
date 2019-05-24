@@ -32,5 +32,22 @@ namespace ATMBotCore.xUnit.Tests
             Assert.Equal(expectedResult, actualResult);
             Assert.Throws<ArgumentException>(() => storage.RestoreObject<object>("FAKE-KEY"));
         }
+
+        [Fact]
+        public void JsonStorageTest()
+        {
+            const string expectedKey = "Testing/Test";
+            const string expectedResult = "I'm a unit test!";
+
+            IDataStorage storage = new JsonStorage();
+
+            storage.StoreObject(expectedKey, "I'm different.");
+            storage.StoreObject(expectedKey, expectedResult);
+
+            var actualResult = storage.RestoreObject<string>(expectedKey);
+
+            Assert.Equal(expectedResult, actualResult);
+            Assert.Throws<ArgumentException>(() => storage.RestoreObject<object>("FAKE-KEY"));
+        }
     }
 }
