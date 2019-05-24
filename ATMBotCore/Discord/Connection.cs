@@ -16,14 +16,14 @@ namespace ATMBotCore.Discord
             _client = client;
         }
 
-        internal async Task ConnectAsync(ATMBotConfig config)
+        public async Task ConnectAsync(ATMBotConfig config)
         {
             _client.Log += _logger.Log;
 
             await _client.LoginAsync(TokenType.Bot, config.Token);
             await _client.StartAsync();
 
-            await Task.Delay(-1);
+            await Task.Delay(1000);
         }
     }
 }
