@@ -1,30 +1,24 @@
-using System;
 using System.Threading.Tasks;
-using ATMBotCore.Discord;
-using ATMBotCore.Discord.Entities;
-using ATMBotCore.Storage;
+using ATMBotCore.Connection;
+using ATMBotCore.Handlers;
 
 namespace ATMBotCore
 {
     public class ATMBot
     {
-        private readonly IDataStorage _storage;
-        private readonly Connection _connection;
+        private readonly IConnection _connection;
+        private readonly ICommandHandler _commandHandler;
 
-        public ATMBot(IDataStorage storage, Connection connection)
+        public ATMBot(IConnection connection, ICommandHandler commandHandler)
         {
-            _storage = storage;
             _connection = connection;
+            _commandHandler = commandHandler;
         }
 
-        public async Task Start()
+        public async Task RunAsync()
         {
-            await _connection.ConnectAsync(new ATMBotConfig
-            {
-                Token = _storage.RestoreObject<string>("Config/BotToken")
-            });
-
-            Console.ReadKey();
+            await _connection.Connect();
+            await _commandHandler.InitializeAsync();
         }
     }
 }

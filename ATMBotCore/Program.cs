@@ -7,8 +7,8 @@ namespace ATMBotCore
     {
         private static async Task Main()
         {
-            var bot = InversionOfControl.Provider.GetRequiredService<ATMBot>();
-            await bot.Start();
+            await InversionOfControl.Container.GetInstance<ATMBot>().RunAsync();
+            await Task.Delay(-1).ConfigureAwait(false);
         }
     }
 }

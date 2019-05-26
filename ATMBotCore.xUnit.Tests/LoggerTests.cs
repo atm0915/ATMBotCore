@@ -1,4 +1,5 @@
 using System;
+using ATMBotCore.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -9,7 +10,7 @@ namespace ATMBotCore.xUnit.Tests
         [Fact]
         public void BasicLoggerTest()
         {
-            var logger = InversionOfControl.Provider.GetRequiredService<ILogger>();
+            var logger = InversionOfControl.Container.GetRequiredService<ILogger>();
 
             Assert.NotNull(logger);
 

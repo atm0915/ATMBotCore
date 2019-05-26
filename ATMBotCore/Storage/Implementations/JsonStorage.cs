@@ -9,7 +9,7 @@ namespace ATMBotCore.Storage.Implementations
     {
         public void StoreObject(string key, object obj)
         {
-            string file = $"{key}.json";
+            string file = $"Resources/{key}.json";
             CreateDirectory(Path.GetDirectoryName(file));
             string json = JsonConvert.SerializeObject(obj, Formatting.Indented, new JsonSerializerSettings()
             {
@@ -21,9 +21,9 @@ namespace ATMBotCore.Storage.Implementations
 
         public T RestoreObject<T>(string key)
         {
-            if (!File.Exists($"{key}.json"))
-                throw new ArgumentException($"The provided file '{key}.json' was not found.");
-            string json = File.ReadAllText($"{key}.json");
+            if (!File.Exists($"Resources/{key}.json"))
+                throw new ArgumentException($"The provided file 'Resources/{key}.json' was not found.");
+            string json = File.ReadAllText($"Resources/{key}.json");
             return JsonConvert.DeserializeObject<T>(json);
         }
     }

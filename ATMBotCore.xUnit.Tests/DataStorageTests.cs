@@ -11,7 +11,7 @@ namespace ATMBotCore.xUnit.Tests
         [Fact]
         public void StorageDefaultsToJson()
         {
-            var storage = InversionOfControl.Provider.GetRequiredService<IDataStorage>();
+            var storage = InversionOfControl.Container.GetRequiredService<IDataStorage>();
 
             Assert.IsType<JsonStorage>(storage);
         }

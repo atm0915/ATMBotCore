@@ -1,37 +1,43 @@
-using ATMBotCore.Discord;
+using ATMBotCore.Connection;
+using ATMBotCore.Handlers;
+using ATMBotCore.Logging;
 using ATMBotCore.Storage;
 using ATMBotCore.Storage.Implementations;
 using Discord.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
+using Lamar;
+
 
 namespace ATMBotCore
 {
     public static class InversionOfControl
     {
-        private static ServiceProvider _provider;
+        private static Container _container;
 
-        public static ServiceProvider Provider => GetOrInitProvider();
-
-        private static ServiceProvider GetOrInitProvider()
+        public static Container Container
         {
-            if (_provider is null)
-            {
-                InitializeProvider();
-            }
-
-            return _provider;
+            get { return GetOrInitProvider(); }
         }
 
-        private static void InitializeProvider()
+        private static Container GetOrInitProvider()
         {
-            _provider = new ServiceCollection()
-                        .AddSingleton<ATMBot>()
-                        .AddSingleton<IDataStorage, JsonStorage>()
-                        .AddSingleton<ILogger, Logger>()
-                        .AddSingleton<DiscordLogger>()
-                        .AddSingleton<DiscordSocketClient>(s => new DiscordSocketClient(SocketConfig.GetDefault()))
-                        .AddSingleton<Connection>()
-                        .BuildServiceProvider();
+            if (_container is null)
+            {
+                InitializeContainer();
+            }
+
+            return _container;
+        }
+
+        private static void InitializeContainer()
+        {
+            _container = new Container(c =>
+            {
+                c.ForSingletonOf<IDataStorage>().Use<JsonStorage>();
+                c.For<IConnection>().Use<DiscordConnection>();
+                c.For<ICommandHandler>().Use<DiscordCommandHandler>();
+                c.For<ILogger>().Use<ConsoleLogger>();
+                c.ForSingletonOf<DiscordSocketClient>().UseIfNone(DiscordSocketClientFactory.GetDefault());
+            });
         }
     }
 }
